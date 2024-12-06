@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shruti Matrix Effect</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: black;
+            overflow: hidden;
+            font-family: monospace;
+            font-size: 16px;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    <script>
+        // Get canvas and context
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas to full screen
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Characters and columns setup
+        const names = ["Shruti"];
+        const fontSize = 23; // Larger font size to reduce columns
+        const columns = Math.floor(canvas.width / fontSize); // Reduce column density
+        const drops = Array(columns).fill(0);
+
+        // Function to generate random colors
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Draw the animation
+        // function draw() {
+        //     ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+        //     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        //     ctx.font = `${fontSize}px monospace`;
+
+        //     for (let i = 0; i < drops.length; i++) {
+        //         const name = names[Math.floor(Math.random() * names.length)];
+        //         ctx.fillStyle = getRandomColor();
+        //         ctx.fillText(name, i * fontSize * 2, drops[i] * fontSize);
+
+        //         // Reset when reaching the bottom
+        //         if (drops[i] * fontSize > canvas.height && Math.random() > 0.95) {
+        //             drops[i] = 0;
+        //         }
+
+        //         drops[i]++;
+        //     }
+        // }
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "lime";
+            ctx.font = `${fontSize}px monospace`;
+
+            for (let i = 0; i < drops.length; i++) {
+                const name = names[Math.floor(Math.random() * names.length)];
+                ctx.fillText(name, i * fontSize, drops[i] * fontSize);
+
+                // Reset when reaching the bottom
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.95) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 100);
+
+        // Adjust canvas on window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
